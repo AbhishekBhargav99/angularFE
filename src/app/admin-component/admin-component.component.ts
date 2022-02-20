@@ -12,6 +12,7 @@ import { DisplayVal, PatientRecordsView } from './utils/patient-records-view';
 export class AdminComponentComponent implements OnInit {
 
   public adminId: string;
+  public hospitalId: string;
   public patientRecords$? : Observable<Array<PatientRecordsView>>;
   public patientRec: Array<PatientRecordsView>;
   private sub ?: Subscription;
@@ -25,6 +26,7 @@ export class AdminComponentComponent implements OnInit {
     private adminService: AdminService) { 
 
       this.adminId = "";
+      this.hospitalId = "";
       this.patientRec = [];
     }
 
@@ -34,7 +36,8 @@ export class AdminComponentComponent implements OnInit {
     .subscribe((params: Params) => {
       console.log(params);
       this.adminId = params['adminId'];
-      console.log(this.adminId);
+      this.hospitalId = params["hospId"]
+      // console.log(this.adminId);
       this.refresh();
     });
   }
@@ -45,7 +48,7 @@ export class AdminComponentComponent implements OnInit {
 
   public refresh() : void{
     console.log("Hello");
-    this.adminService.getAllPatients(this.adminId, '2')
+    this.adminService.getAllPatients(this.adminId, this.hospitalId)
     .subscribe(data => {
       console.log("data : ", data);
       this.patientRec = data;
