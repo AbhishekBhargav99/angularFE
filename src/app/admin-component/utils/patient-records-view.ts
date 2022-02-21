@@ -2,8 +2,9 @@ export interface PatientRecord{
     patientId: string;
     firstName: string;
     lastName: string;
-    emergPhoneNumber: string;
+    // emergPhoneNumber: string;
     phoneNumber: string;
+    email: string;
 }
 
 export class DisplayVal {
@@ -21,15 +22,17 @@ export class PatientRecordsView {
     firstName = '';
     lastName = '';
     // docType = '';
-    emergPhoneNumber = '';
+    // emergPhoneNumber = '';
     phoneNumber = '';
+    email = '';
   
     constructor(readonly patientRecord: PatientRecord) {
       this.patientId = patientRecord.patientId;
       this.firstName = patientRecord.firstName;
       this.lastName = patientRecord.lastName;
     //   this.docType = patientRecord.docType;
-      this.emergPhoneNumber = patientRecord.emergPhoneNumber;
+      this.email = patientRecord.email;
+      // this.emergPhoneNumber = patientRecord.emergPhoneNumber;
       this.phoneNumber = patientRecord.phoneNumber;
     }
 }

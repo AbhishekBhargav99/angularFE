@@ -1,4 +1,4 @@
-<!-- <p>Admin</p> -->
+<!-- <p>Admin</p>
 <div class="sidebar-layout-bottom-row p-3 container-fluid">
     <p>List of All Patients</p>
     <div class="table-responsive">
@@ -11,16 +11,7 @@
               </tr>
             </thead>
             <tbody>
-              <!--<tr *ngFor="let singleRecord of patientRecords">
-                <td *ngFor="let columnName of headerNames">
-                  {{singleRecord[columnName.keyName]}}
-                </td>
-              </tr>-->
-              <!-- <tr *ngFor="let singleRecord of patientRecords$ | async">
-                <td>{{singleRecord.patientId}}</td>
-                <td>{{singleRecord.firstName}}</td>
-                <td>{{singleRecord.lastName}}</td>
-              </tr> -->
+              
               <tr *ngFor="let singleRecord of patientRec">
                 <td>{{singleRecord.patientId}}</td>
                 <td>{{singleRecord.firstName}}</td>
@@ -29,8 +20,42 @@
             </tbody>
           </table>
           <span>Total count: {{(patientRec)?.length}}</span>
-          <!-- <li *ngFor="let record of patientRec">
-              {{record.firstName}}
-          </li> -->
+          
     </div>
-</div>
+</div> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="['./']" >{{adminId}}</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" [routerLink]="['./', 'patients']"
+          routerLinkActive="Active" [routerLinkActiveOptions]="{exact: true}" >Patients</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" [routerLink]="['./', 'doctors']"
+          routerLinkActive="Active" [routerLinkActiveOptions]="{exact: true}" >Doctors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" [routerLink]="['./', 'addPatient']"
+          routerLinkActive="Active" [routerLinkActiveOptions]="{exact: true}" >Add Patient</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" [routerLink]="['./', 'addDoctor']"
+          routerLinkActive="Active" [routerLinkActiveOptions]="{exact: true}" >Add Doctor</a>
+        </li>
+        
+      </ul>
+     
+    </div>
+  </div>
+</nav>
+
+
+<router-outlet></router-outlet>
+
+
