@@ -10,6 +10,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule} from '@angular/material/grid-list';
 
 import { AdminComponentComponent } from './admin-component/admin-component.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,6 +30,7 @@ import { ViewpatientsComponent } from './admin-component/viewpatients/viewpatien
 import { ViewdoctorsComponent } from './admin-component/viewdoctors/viewdoctors.component';
 import { AddpatientComponent } from './admin-component/addpatient/addpatient.component';
 import { AdddoctorComponent } from './admin-component/adddoctor/adddoctor.component';
+
 
 
 @NgModule({
@@ -42,14 +50,23 @@ import { AdddoctorComponent } from './admin-component/adddoctor/adddoctor.compon
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatInputModule,
+    MatSelectModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatButtonModule,
+    MatGridListModule,
     ReactiveFormsModule,
     MatTableModule,
     MatFormFieldModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

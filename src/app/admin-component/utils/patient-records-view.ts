@@ -7,22 +7,10 @@ export interface PatientRecord{
     email: string;
 }
 
-export class DisplayVal {
-    keyName: string | number | boolean;
-    displayName: string;
-  
-    constructor(key: string | number | boolean, value: string) {
-      this.keyName = key;
-      this.displayName = value;
-    }
-}
-
 export class PatientRecordsView {
     patientId = '';
     firstName = '';
     lastName = '';
-    // docType = '';
-    // emergPhoneNumber = '';
     phoneNumber = '';
     email = '';
   

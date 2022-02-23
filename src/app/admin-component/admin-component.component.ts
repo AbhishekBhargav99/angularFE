@@ -30,7 +30,6 @@ export class AdminComponentComponent implements OnInit {
         
         this.route.params
         .subscribe((params: Params) => {
-          console.log(params);
           this.adminId = params['adminId'];
           this.hospitalId = params["hospId"]
         });

@@ -2,13 +2,11 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscriber, Subscription } from 'rxjs';
 import { AdminService } from '../admin.service';
-import { DisplayVal, PatientRecordsView } from '../utils/patient-records-view';
+import { PatientRecordsView } from '../utils/patient-records-view';
 
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import {MatPaginatorModule} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-viewpatients',
@@ -20,7 +18,6 @@ export class ViewpatientsComponent implements OnInit, OnDestroy {
   public adminId: string;
   public hospitalId: string;
   public patientRecords$? : Observable<Array<PatientRecordsView>>;
-  public patientRec: Array<PatientRecordsView>;
   private sub ?: Subscription;
 
   displayedColumns: string[] = ['patientId', 'firstName', 'lastName', 'phoneNumber', 'email'];
@@ -30,12 +27,11 @@ export class ViewpatientsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private route: ActivatedRoute, 
-    private adminService: AdminService,
-    private router: Router){
+    private adminService: AdminService){
       
       this.adminId = "";
       this.hospitalId = "";
-      this.patientRec = [];
+
 
   }
 
