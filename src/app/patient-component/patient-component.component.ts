@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, Params } from '@angular/router';
+import { PatientService } from './patient.service';
+import { ViewpatientdetailsComponent } from './viewpatientdetails/viewpatientdetails.component';
 
 @Component({
   selector: 'app-patient-component',
@@ -7,9 +11,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PatientComponentComponent implements OnInit {
 
-  constructor() { }
+  patientId : string;
+  hospitalId: string;
+  patientInfo: any;
+
+  constructor( private route: ActivatedRoute, 
+    private patientService: PatientService,
+    public dialog: MatDialog) {
+    this.patientId = "";
+    this.hospitalId = "";
+    this.patientInfo = "";
+    
+  }
 
   ngOnInit(): void {
+    this.route.params
+        .subscribe((params: Params) => {
+          this.patientId = params['patientId'];
+          this.hospitalId = params["hospId"];
+        });
+    // this.refresh();
   }
+
+  openDialog(patient : any) {
+    this.dialog.open(ViewpatientdetailsComponent, {
+     width: '30%',
+     data: patient
+    });
+  }
+
+  refresh() {
+    this.patientService.getPatientDetails(this.patientId, this.hospitalId)
+    .subscribe(
+      (res : any) => { 
+        this.patientInfo = res; 
+        this.patientService.permissionedArray = this.patientInfo.permissionGranted;
+        // this.openDialog(this.patientInfo);
+      },
+      (err : any) => {console.log("Error : ", err) }
+    )
+    
+  }
+
+
 
 }

@@ -63,4 +63,56 @@ export class AdminService {
         })
     )
   }
+
+  public registerPatient(adminId: string, hospId: string, patientData: Object){
+    // console.log(adminId, hospId);
+    // console.log(patientData);
+    return this.http.post(
+      (this.Url + '/newPatient'),
+      patientData,
+      {
+        headers: new HttpHeaders({
+          'hospitalid' : hospId,
+          'adminid': adminId
+        })
+      }
+    )
+    .pipe(
+      map(
+        reponseData => {
+          return reponseData;
+        }
+      ),
+      catchError(
+        err => {
+          throw(err);
+        }
+      )
+    )
+  }
+
+  public registerDoctor(adminId: string, hospId: string, doctorData: Object){
+    return this.http.post(
+      (this.Url + '/newDoctor'),
+      doctorData,
+      {
+        headers: new HttpHeaders({
+          'hospitalid' : hospId,
+          'adminid': adminId
+        })
+      }
+    ) .pipe(
+      map(
+        responseData => {
+          return responseData;
+        }
+      ),
+      catchError(
+        err => {
+          throw(err);
+          console.log(err);
+        }
+      )
+    )
+  }
 }

@@ -11,3 +11,27 @@ table {
 td, th{
     width: 25%
 }
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.activeClass{
+    background-color: rgb(245, 153, 153);
+    opacity: .8;
+    /* color: black; */
+    z-index: -1;
+    border-radius: 5px;
+}
+
+.nav-item{
+    padding-left : 14px;
+    padding-right : 14px;
+    font-size: 1.3rem;
+
+    /* background-color: rgb(223, 97, 97); */
+}

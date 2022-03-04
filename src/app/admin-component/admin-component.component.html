@@ -1,54 +1,48 @@
-<!-- <p>Admin</p>
-<div class="sidebar-layout-bottom-row p-3 container-fluid">
-    <p>List of All Patients</p>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th *ngFor="let column of headers" scope="col">
-                  {{column.displayName}}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              
-              <tr *ngFor="let singleRecord of patientRec">
-                <td>{{singleRecord.patientId}}</td>
-                <td>{{singleRecord.firstName}}</td>
-                <td>{{singleRecord.lastName}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <span>Total count: {{(patientRec)?.length}}</span>
-          
-    </div>
-</div> -->
+<!-- <mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+   <mat-icon>account_circle</mat-icon>
+ </button>
+ <span>{{adminId}}</span>
+ <span class="example-spacer"></span>
+ <button mat-raised-button color="accent" type="button" [routerLink]="['viewPatients']">View Patients</button>
+ 
+</mat-toolbar> -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="['./']" >{{adminId}}</a>
+    <a class="navbar-brand" [routerLink]="['./']" >  
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <span>{{adminId}}</span>
+    </a>
+    
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <!-- <span class="example-spacer"></span> -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav mb-2">
         <li class="nav-item">
           <a class="nav-link " aria-current="page" [routerLink]="['./', 'patients']"
-          routerLinkActive="Active" [routerLinkActiveOptions]="{exact: true}" >Patients</a>
+          [routerLinkActive] = "['Active', 'activeClass']" [routerLinkActiveOptions]="{exact: true}" >Patients</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" aria-current="page" [routerLink]="['./', 'doctors']"
-          routerLinkActive="Active" [routerLinkActiveOptions]="{exact: true}" >Doctors</a>
+          [routerLinkActive] = "['Active', 'activeClass']" [routerLinkActiveOptions]="{exact: true}" >Doctors</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " aria-current="page" [routerLink]="['./', 'addPatient']"
-          routerLinkActive="Active" [routerLinkActiveOptions]="{exact: true}" >Add Patient</a>
+          [routerLinkActive] = "['Active', 'activeClass']" [routerLinkActiveOptions]="{exact: true}" >Add Patient</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " aria-current="page" [routerLink]="['./', 'addDoctor']"
-          routerLinkActive="Active" [routerLinkActiveOptions]="{exact: true}" >Add Doctor</a>
+          [routerLinkActive] = "['Active', 'activeClass']" [routerLinkActiveOptions]="{exact: true}" >Add Doctor</a>
         </li>
-        
+        <button mat-raised-button color="accent" type="button" [routerLink]="['']" >Log Out</button>
       </ul>
      
     </div>

@@ -1,0 +1,10 @@
+mat-form-field{
+    width: 100%;
+}
+
+
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: rgb(237, 252, 204);
+    border-radius: 5px;
+  }

@@ -1,0 +1,98 @@
+<div class="container my-5">
+  
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <mat-card>
+        <mat-card-title class="text-center">Add Patient's Medical Record</mat-card-title>
+  
+        <mat-card-subtitle class="text-center" 
+          *ngIf="!medForm.valid && medForm.touched"> 
+          * All Fields are Neccessary
+        </mat-card-subtitle>
+  
+        <mat-card-content>
+        <form #form="ngForm" [formGroup]="medForm" (ngSubmit)="onSubmit()">
+  
+          <!-- first -->
+            <br><br><br>
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Patient's Id</mat-label>
+            <input matInput placeholder="Patient's Id" formControlName="patientId" [readonly]="true">
+          </mat-form-field>
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Reasons For Visit</mat-label>
+            <input matInput placeholder="Reason for visit" formControlName="reasonsForVisit">
+            <mat-hint *ngIf="!this.medForm.get('reasonsForVisit')?.valid && this.medForm.get('reasonsForVisit')?.touched">Length Should be between 3 and 50 characters</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Allergies</mat-label>
+            <input matInput placeholder="Allergies" formControlName="allergies">
+            <mat-hint *ngIf="!this.medForm.get('allergies')?.valid && this.medForm.get('allergies')?.touched">Length Should be between 3 and 50 characters</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Symptoms of</mat-label>
+            <input matInput placeholder="Symptoms" formControlName="symptoms">
+            <mat-hint *ngIf="!this.medForm.get('symptoms')?.valid && this.medForm.get('symptoms')?.touched">Length Should be between 3 and 50 characters</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Diagnosed with</mat-label>
+            <input matInput placeholder="diagnosis" formControlName="diagnosis">
+            <mat-hint *ngIf="!this.medForm.get('diagnosis')?.valid && this.medForm.get('diagnosis')?.touched">Length Should be between 3 and 50 characters</mat-hint>
+          </mat-form-field>
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Treatment/ Test prescribed</mat-label>
+            <input matInput placeholder="Treatment" formControlName="treatment">
+            <mat-hint *ngIf="!this.medForm.get('treatment')?.valid && this.medForm.get('treatment')?.touched">Length Should be between 3 and 50 characters</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Medication given</mat-label>
+            <input matInput placeholder="Medication" formControlName="medication">
+            <mat-hint *ngIf="!this.medForm.get('medication')?.valid && this.medForm.get('medication')?.touched">Length Should be between 3 and 50 characters</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Follow Up on</mat-label>
+            <input matInput placeholder="Follow Up" formControlName="followUp">
+            <mat-hint *ngIf="!this.medForm.get('followUp')?.valid && this.medForm.get('followUp')?.touched">Length Should be between 3 and 50 characters</mat-hint>
+          </mat-form-field>
+  
+          
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Doctor's Notes</mat-label>
+            <textarea matInput placeholder="Doctor's Notes" formControlName="notes"></textarea>
+            <mat-hint *ngIf="!this.medForm.get('notes')?.valid && this.medForm.get('notes')?.touched">Length Should be between 3 and 100 characters</mat-hint>
+          </mat-form-field>  
+  
+          <!-- <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Choose DOB</mat-label>
+            <input  matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" formControlName="age">
+            <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field> -->
+  
+          <div class="container text-center">
+            <button type="submit" mat-raised-button color="primary"
+            [disabled]= "!medForm.valid"
+            >Add</button>
+  
+            <button style="margin-left: 20px" type="button" mat-raised-button color="accent"
+              (click)="clearForm()">Clear</button>
+          </div>
+        </form>
+      </mat-card-content>
+      <!-- <mat-card-footer>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card-footer> -->
+      </mat-card>
+  
+      </div>
+      
+    </div>
+  </div>

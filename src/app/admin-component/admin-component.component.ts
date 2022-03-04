@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AdminService } from '../admin-component/admin.service';
+import { LoaderService } from '../loader/loader.service';
 
 
 
@@ -20,7 +21,8 @@ export class AdminComponentComponent implements OnInit {
   
 
   constructor(private route: ActivatedRoute, 
-    private adminService: AdminService){
+    private adminService: AdminService,
+    ){
 
       this.adminId = "";
       this.hospitalId = "";

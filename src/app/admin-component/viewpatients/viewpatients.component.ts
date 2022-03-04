@@ -20,7 +20,7 @@ export class ViewpatientsComponent implements OnInit, OnDestroy {
   public patientRecords$? : Observable<Array<PatientRecordsView>>;
   private sub ?: Subscription;
 
-  displayedColumns: string[] = ['patientId', 'firstName', 'lastName', 'phoneNumber', 'email'];
+  displayedColumns: string[] = ['patientId', 'firstName', 'lastName', 'phoneNumber', 'email', 'age', 'address'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

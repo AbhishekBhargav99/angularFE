@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       role: new FormControl('admin', Validators.required),
       username: new FormControl('', Validators.required),
       hospitalId: new FormControl('1', Validators.required),
-      password: new FormControl('', [ Validators.required, Validators.minLength(4), Validators.maxLength(12)])
+      password: new FormControl('', [ Validators.required, Validators.minLength(4), Validators.maxLength(12) ])
     })
   }
 

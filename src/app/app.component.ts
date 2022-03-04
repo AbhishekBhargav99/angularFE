@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { LoaderService } from './loader/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ehrApp';
+  loading$ = this.loaderService.loading$;
+
+  constructor(public loaderService : LoaderService ){
+
+  }
 }
