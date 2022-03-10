@@ -16,17 +16,25 @@ export class AddmedicalrecordComponent implements OnInit {
   doctorId: string;
   hospitalId: string;
   medForm: FormGroup;
+  startDate : any;
   @ViewChild('form') form: any;
   
 
   constructor(private formBuilder : FormBuilder, 
     private route: ActivatedRoute,
-    private doctorService : DoctorService) 
+    private doctorService : DoctorService,
+    private router : Router) 
     { 
     this.patientId = "";
     this.doctorId = "";
     this.hospitalId = "";
     this.medForm = this.formBuilder.group({});
+    let today = new Date();
+    let month = today.getMonth(); //next month
+    let year = today.getUTCFullYear();
+    let day = today.getDay();
+
+  this.startDate = new Date(year, month, day);
 
   }
 
@@ -49,26 +57,43 @@ export class AddmedicalrecordComponent implements OnInit {
         // {value: this.patientId, disabled: true}
     this.medForm = this.formBuilder.group({
       patientId : new FormControl(this.patientId, Validators.required),
-      reasonsForVisit : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-      allergies : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-      symptoms : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-      diagnosis : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-      treatment : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-      medication : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-      followUp : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
-      notes : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
+      reasonsForVisit : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
+      allergies : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]),
+      symptoms : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]),
+      diagnosis : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]),
+      treatment : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]),
+      medication : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(200)]),
+      followUp : new FormControl(new Date(), [ Validators.required]),
+      notes : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(200)]),
     });
   }
 
+  createMedForm(){
+    let form = {
+      patientId : this.medForm.value.patientId,
+      reasonsForVisit: this.medForm.value.reasonsForVisit,
+      allergies: this.medForm.value.allergies,
+      symptoms: this.medForm.value.symptoms,
+      diagnosis: this.medForm.value.diagnosis,
+      treatment: this.medForm.value.treatment,
+      medication: this.medForm.value.medication,
+      followUp: this.medForm.value.followUp.toDateString(),
+      notes: this.medForm.value.notes
+    }
+    return form;
+  }
+
   onSubmit(){
-    console.log(this.medForm.value);
+    
+    let newMedForm = this.createMedForm();
     this.doctorService.addMedicalRecords(this.patientId,
-       this.doctorId, this.hospitalId, this.medForm.value)
+       this.doctorId, this.hospitalId, newMedForm)
        .subscribe(
          (res: any) => { console.log(res);
             if(res.status === true){
               Swal.fire({
-                title: res.message,
+                title: "Successfully Added medical Records",
+                text: `Of Patient : ${this.patientId}, By Doctor : ${this.doctorId}`,
                 icon:'success',
                 confirmButtonText: 'Ok',
               }).then(
@@ -94,6 +119,11 @@ export class AddmedicalrecordComponent implements OnInit {
     // this.medForm.reset();
     this.form.resetForm();
     this.medForm.controls['patientId'].setValue(this.patientId);
+  }
+
+  backToPatients(){
+    this.router.navigate(['doctor', this.hospitalId, this.doctorId, 'viewPatients']);
+    console.log("HI");
   }
 
 }

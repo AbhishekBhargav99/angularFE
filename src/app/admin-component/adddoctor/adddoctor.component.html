@@ -4,8 +4,8 @@
       <div class="col-md-6 offset-md-3">
 
         <mat-card>
-        <mat-card-title class="text-center">Add New Doctor</mat-card-title>
-        <mat-card-subtitle class="text-center" 
+        <mat-card-title class="text-center formHeading">Add New Doctor</mat-card-title>
+        <mat-card-subtitle class="text-center formHeadingWarn" 
           *ngIf="!newDoctorForm.valid && newDoctorForm.touched"> 
           * All Fields are Neccessary
         </mat-card-subtitle>
@@ -13,41 +13,40 @@
         <mat-card-content>
         <form #form = "ngForm" [formGroup]="newDoctorForm" (ngSubmit)="onSubmit()">
   
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>User Id</mat-label>
-            <input matInput placeholder="Unique Doctor Id" formControlName="userId">
-            <mat-hint *ngIf="!newDoctorForm.get('userId')?.valid && newDoctorForm.get('userId')?.touched" > User Id Should be between 3 and 12 characters long</mat-hint>
+          <mat-form-field class="full-width my-3" appearance="outline">
+            <mat-label class="formLabel">User Id</mat-label>
+            <input class="formInput" matInput placeholder="Unique Doctor Id" formControlName="userId" >
+            <mat-hint class="formHint" *ngIf="!newDoctorForm.get('userId')?.valid && newDoctorForm.get('userId')?.touched" > User Id Should be between 3 and 12 characters long</mat-hint>
           </mat-form-field>
          
           <!-- first -->
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>First Name</mat-label>
-            <input matInput placeholder="Your First Name" formControlName="firstName">
-            <mat-hint *ngIf="!newDoctorForm.get('firstName')?.valid && newDoctorForm.get('firstName')?.touched" > Length between 3 and 12 characters long</mat-hint>
+          <mat-form-field class="full-width my-3" appearance="outline">
+            <mat-label class="formLabel">First Name</mat-label>
+            <input class="formInput" matInput placeholder="Your First Name" formControlName="firstName">
+            <mat-hint  class="formHint" *ngIf="!newDoctorForm.get('firstName')?.valid && newDoctorForm.get('firstName')?.touched" > Length between 3 and 12 characters long</mat-hint>
           </mat-form-field>
   
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Last Name</mat-label>
-            <input matInput placeholder="Your Last Name" formControlName="lastName">
-            <mat-hint *ngIf="!newDoctorForm.get('lastName')?.valid && newDoctorForm.get('lastName')?.touched" > Length between 3 and 12 characters long</mat-hint>
-
+          <mat-form-field class="full-width my-3" appearance="outline">
+            <mat-label class="formLabel">Last Name</mat-label>
+            <input class="formInput" matInput placeholder="Your Last Name" formControlName="lastName">
+            <mat-hint class="formHint" *ngIf="!newDoctorForm.get('lastName')?.valid && newDoctorForm.get('lastName')?.touched" > Length between 3 and 12 characters long</mat-hint>
           </mat-form-field>
   
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="Your Email Address" formControlName="email">
-            <mat-hint *ngIf="!newDoctorForm.get('email')?.valid && newDoctorForm.get('email')?.touched" > Enter a valid email</mat-hint>
+          <mat-form-field class="full-width my-3" appearance="outline">
+            <mat-label class="formLabel">Email</mat-label>
+            <input class="formInput" matInput placeholder="Your Email Address" formControlName="email">
+            <mat-hint class="formHint" *ngIf="!newDoctorForm.get('email')?.valid && newDoctorForm.get('email')?.touched" > Enter a valid email</mat-hint>
 
           </mat-form-field>
   
           
   
-          <mat-form-field  class="full-width" appearance="outline">
-            <mat-label>Select Speciality</mat-label>
-            <mat-select formControlName="speciality">
-              <mat-option *ngFor="let speciality of specialities" value="{{speciality}}"> {{speciality}} </mat-option>
+          <mat-form-field  class="full-width my-3" appearance="outline">
+            <mat-label class="formLabel">Select Speciality</mat-label>
+            <mat-select formControlName="speciality" class="formInput">
+              <mat-option  *ngFor="let speciality of specialities" value="{{speciality}}"> {{speciality}} </mat-option>
             </mat-select>
-            <mat-hint *ngIf="!newDoctorForm.get('speciality')?.valid && newDoctorForm.get('speciality')?.touched" > Choose a Speciality</mat-hint>
+            <mat-hint class="formHint" *ngIf="!newDoctorForm.get('speciality')?.valid && newDoctorForm.get('speciality')?.touched" > Choose a Speciality</mat-hint>
 
           </mat-form-field>
   
@@ -57,11 +56,11 @@
   
             
             <button type="submit" mat-raised-button color="primary"
-              [disabled]="!newDoctorForm.valid"
+              [disabled]="!newDoctorForm.valid" class="formButton"
               >Register</button>
   
             <button style="margin-left: 20px" type="button" mat-raised-button color="accent"
-              (click)="clearForm()">Clear</button>
+              (click)="clearForm()" class="formButton">Clear</button>
           </div>
   
         </form>

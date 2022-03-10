@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="['./']" >  
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
@@ -25,5 +25,6 @@
   </div>
 </nav>
 
-
-<router-outlet></router-outlet>
+<div style="margin-top:100px ;">
+  <router-outlet></router-outlet>
+</div>

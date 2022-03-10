@@ -3,10 +3,10 @@ table {
 }
   
 .mat-form-field {
-    font-size: 14px;
+    font-size: 16px;
     width: 100%;
 }
 
-/* td, th{
-    width: 25%
-} */
+td, th{
+    width: 10%
+}

@@ -1,83 +1,47 @@
 <div class="container">
     <div style="margin-top: 10px;">
-      <mat-form-field appearance="standard">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Abhishek" #input>
-      </mat-form-field>
+      <div class="col-md- mx-auto shadow-lg p-1 mb-1 rounded">
+        <mat-form-field appearance="outline" >
+          <mat-label>General Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Search Here" #input>
+        </mat-form-field>
+      </div>
       
-      <div class="mat-elevation-z8">
+      <div class="mat-elevation-z8 shadow-lg p-3 mb-5 bg-white rounded">
         <table mat-table [dataSource]="dataSource" matSort>
       
           <!-- ID Column -->
           <ng-container matColumnDef="sno">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> S. No </th>
-            <td mat-cell *matCellDef="let row; let i = index;"> {{i + 1}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableHeader"> S. No </th>
+            <td mat-cell *matCellDef="let row; let i = index;" class="tableData"> {{i + 1}} </td>
           </ng-container>
       
           <!-- Progress Column -->
           <ng-container matColumnDef="changedBy">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Added By </th>
-            <td mat-cell *matCellDef="let row"> {{row.changedBy}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableHeader"> Added By </th>
+            <td mat-cell *matCellDef="let row" class="tableData"> {{row.changedBy}} </td>
           </ng-container>
       
       
           <!-- Fruit Column -->
           <ng-container matColumnDef="timestamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-            <td mat-cell *matCellDef="let row"> {{convertToDate(row.Timestamp)}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableHeader">Date</th>
+            <td mat-cell *matCellDef="let row" class="tableData"> {{convertToDate(row.Timestamp)}} </td>
           </ng-container>
   
           <ng-container matColumnDef="reasonsForVisit">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Reasons </th>
-            <td mat-cell *matCellDef="let row"> {{row.reasonsForVisit}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableHeader"> Reasons </th>
+            <td mat-cell *matCellDef="let row" class="tableData"> {{row.reasonsForVisit}} </td>
           </ng-container>
   
-          <!-- <ng-container matColumnDef="allergies">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Allergies </th>
-            <td mat-cell *matCellDef="let row"> {{row.allergies}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="symptoms">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Symptoms for </th>
-            <td mat-cell *matCellDef="let row"> {{row.symptoms}} </td>
-          </ng-container> -->
-
           <ng-container matColumnDef="diagnosis">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Diagnosed with </th>
-            <td mat-cell *matCellDef="let row"> {{row.diagnosis}} </td>
-          </ng-container>
-
-          <!-- <ng-container matColumnDef="diagnosis">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Diagnosed with </th>
-            <td mat-cell *matCellDef="let row"> {{row.diagnosis}} </td>
-          </ng-container> -->
-
-
-
-          <!-- <ng-container matColumnDef="treatment">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Treatment </th>
-            <td mat-cell *matCellDef="let row"> {{row.treatment}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="medication">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Medication given </th>
-            <td mat-cell *matCellDef="let row"> {{row.medication}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="followUp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Follow Up </th>
-            <td mat-cell *matCellDef="let row"> {{row.followUp}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="notes">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Notes </th>
-            <td mat-cell *matCellDef="let row"> {{row.notes}} </td>
-          </ng-container> -->
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableHeader"> Diagnosed with </th>
+            <td mat-cell *matCellDef="let row" class="tableData"> {{row.diagnosis}} </td>
+          </ng-container> 
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
-            <!-- <td mat-cell *matCellDef="let row"> {{row.email}} </td> -->
-            <td mat-cell *matCellDef="let row"> 
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableHeader"> Actions </th>
+            <td mat-cell *matCellDef="let row" class="tableData"> 
              <button class="mat-icon-button" (click)="showRecordsDetails(row)">
                <mat-icon>visibility</mat-icon>
              </button>

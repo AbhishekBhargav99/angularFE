@@ -7,6 +7,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { DoctorRecordsView } from 'src/app/admin-component/utils/doctor-records-view';
 import { PatientService } from '../patient.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-viewalldoctors',
@@ -77,15 +78,23 @@ export class ViewalldoctorsComponent implements OnInit {
   }
 
   grant(doctorId: string){
-    console.log("Doctor Granted : ", doctorId);
     this.patientService.grantAccessToDoctor(this.patientId, doctorId, this.hospitalId)
       .subscribe(
         (res : any) => {
           this.patientService.permissionedArray = res;
           this.permissionedDocs =  this.patientService.permissionedArray
-          console.log("Response : ", res);
+          Swal.fire({
+            title: "Succesfully granted Permission",
+            text: `To : ${doctorId}`,
+            confirmButtonText: 'Ok',
+            icon: 'success' 
+          })
         },
         (err : any) => {
+          Swal.fire({
+            title: err,
+            icon: 'error'
+          })
           console.log("Error : ", err);
         }
       )
@@ -98,13 +107,17 @@ export class ViewalldoctorsComponent implements OnInit {
   }
 
   revoke(doctorId: string){
-    console.log("Dcotor Revoked : " , doctorId);
     this.patientService.revokeAccessFromDoctor(this.patientId, doctorId, this.hospitalId)
       .subscribe(
         (res : any) => {
           this.patientService.permissionedArray = res;
           this.permissionedDocs =  this.patientService.permissionedArray
-          console.log("Response : ", res);
+          Swal.fire({
+            title: "Succesfully revoked Permission",
+            text: `From : ${doctorId}`,
+            confirmButtonText: 'Ok',
+            icon: 'success' 
+          })
         },
         (err : any) => {
           console.log("Error : ", err);

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 import { User } from '../shared/user';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   public loginForm : FormGroup;
   public user: User | undefined;
   public errorMsg : string;
+  @ViewChild('form') form: any;
 
   constructor(private formBuilder : FormBuilder,
       private authService: AuthService,
@@ -57,7 +59,7 @@ export class LoginComponent implements OnInit {
   login(){
     // console.log(this.loginForm.value);
 
-
+    
     if(this.loginForm.value.role === 'admin'){
       
       let loginUser = this.createUser();
@@ -74,7 +76,12 @@ export class LoginComponent implements OnInit {
           else{
             this.errorMsg = err.message;
           }
-          alert(this.errorMsg)
+          Swal.fire({
+            title: "Error",
+            text: this.errorMsg,
+            confirmButtonText: 'Ok',
+            icon: 'error' 
+          })
         }
       );
     }
@@ -95,7 +102,12 @@ export class LoginComponent implements OnInit {
           else{
             this.errorMsg = err.message;
           }
-          alert(this.errorMsg)
+          Swal.fire({
+            title: "Error",
+            text: this.errorMsg,
+            confirmButtonText: 'Ok',
+            icon: 'error' 
+          })
         }
       );
     }
@@ -103,12 +115,10 @@ export class LoginComponent implements OnInit {
 
 
     if(this.loginForm.value.role === 'patient'){
-      console.log("Patient login");
       let loginUser = this.createUser();
       this.authService.loginPatient(loginUser)
       .subscribe(
         (res : any) => {  
-                    console.log("response : ", res);
                           this.afterSuccessfulLogin(
                           loginUser.role, 
                           loginUser.hospitalId,
@@ -118,17 +128,23 @@ export class LoginComponent implements OnInit {
             this.errorMsg = "Invalid Patient Credentials";
           }
           else if(err.status === 403){
-            this.errorMsg = "New Patients should change Password First"
+            this.errorMsg = "No such Patient exists in wallet"
           }
           else{
             this.errorMsg = err.message;
           }
-          alert(this.errorMsg)
+          Swal.fire({
+            title: "Error",
+            text: this.errorMsg,
+            confirmButtonText: 'Ok',
+            icon: 'error' 
+          })
         }
       );
     }
     this.errorMsg = "";
-    this.loginForm.reset();    
+    this.form?.resetForm();
+    // this.loginForm.reset();    
   }
 
 

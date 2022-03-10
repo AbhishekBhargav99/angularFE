@@ -46,21 +46,16 @@ export class ViewpatientdetailsComponent implements OnInit {
     // console.log("patientInfo : ", this.patientInfo);
     this.patientForm = this.formBuilder.group({
       patientId: new FormControl(this.patientInfo.patientId),
-      firstName : new FormControl( this.patientInfo.firstName, [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
-      lastName : new FormControl( this.patientInfo.lastName , [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
-      email : new FormControl(this.patientInfo.email , [Validators.required, Validators.email]),
-      phoneNumber: new FormControl( this.patientInfo.phoneNumber, [Validators.required, Validators.pattern("^[0-9]{10}$"), Validators.maxLength(10) ]),
-      address: new FormControl(this.patientInfo.address, [Validators.required, Validators.minLength(3) , Validators.maxLength(30)]),
-      bloodGroup: new FormControl(this.patientInfo.bloodGroup , Validators.required),
-      age : new FormControl( this.patientInfo.age, [ Validators.required]),
-      weight: new FormControl( this.patientInfo.weight , [Validators.required]),
-      gender: new FormControl( this.patientInfo.gender , Validators.required),
-
+      firstName : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      lastName : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      email : new FormControl('', [Validators.required, Validators.email, Validators.maxLength(25)]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$"), Validators.maxLength(10) ]),
+      address: new FormControl('', [Validators.required, Validators.minLength(3) , Validators.maxLength(80)]),
+      bloodGroup: new FormControl('', Validators.required),
+      age : new FormControl(new Date(), [ Validators.required]),
+      weight: new FormControl('', [Validators.required]),
+      gender: new FormControl('M', Validators.required),
     })
-
-
-    
-    console.log("Ids : ", this.patientId, this.hospitalId)
     
   }
 
@@ -81,8 +76,7 @@ export class ViewpatientdetailsComponent implements OnInit {
     })
   }
 
-
-
+ 
   updatePatientRecords(){
     console.log(this.patientForm.value);
     this.patientInfo = this.patientForm.value;

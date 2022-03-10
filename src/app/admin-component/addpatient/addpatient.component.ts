@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AdminService } from '../admin.service';
@@ -43,11 +42,11 @@ export class AddpatientComponent  {
   ngOnInit(): void {
     
     this.newPatientForm = this.formBuilder.group({
-      firstName : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
-      lastName : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]),
-      email : new FormControl('', [Validators.required, Validators.email]),
+      firstName : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      lastName : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+      email : new FormControl('', [Validators.required, Validators.email, Validators.maxLength(25)]),
       phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$"), Validators.maxLength(10) ]),
-      address: new FormControl('', [Validators.required, Validators.minLength(3) , Validators.maxLength(30)]),
+      address: new FormControl('', [Validators.required, Validators.minLength(3) , Validators.maxLength(80)]),
       bloodGroup: new FormControl('', Validators.required),
       age : new FormControl(new Date(), [ Validators.required]),
       weight: new FormControl('', [Validators.required]),
@@ -79,6 +78,7 @@ export class AddpatientComponent  {
       address : this.newPatientForm.value.address ,
       bloodGroup : this.newPatientForm.value.bloodGroup ,
       age : this.getDate(),
+      weight: this.newPatientForm.value.weight
 
     }
     return newPatient;
@@ -109,7 +109,7 @@ export class AddpatientComponent  {
     this.adminService.registerPatient(this.adminId, this.hospitalId, newPatient)
       .subscribe(
         (res : any) => {
-          console.log("Response : ", res);
+          // console.log("Response : ", res);
           if(res.status === true){
             Swal.fire({
               title: "Patient Id : " + res.patientId,
@@ -121,7 +121,6 @@ export class AddpatientComponent  {
                 if (result.isConfirmed){
                   this.onSuccess();
                   this.isLoading = false;
-                  // this.clearForm();
                 }
               }
             )
@@ -140,11 +139,9 @@ export class AddpatientComponent  {
 
   clearForm(){
     this.resetForm();
-    // this.newPatientForm.reset();
   }
  
   onSuccess(){
     this.router.navigate(['../', 'patients'],  {relativeTo: this.route} )
-
   }
 }
