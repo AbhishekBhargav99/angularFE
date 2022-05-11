@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
       hospitalId: new FormControl('1', Validators.required),
       password: new FormControl('', [ Validators.required, Validators.minLength(4), Validators.maxLength(12) ])
     })
+    this.authService.removeUser();
   }
 
 
@@ -49,7 +50,7 @@ export class LoginComponent implements OnInit {
     const username = this.loginForm.value.username;
 
     let loginUser = new User(
-      role, username, password, hospitalId
+      role, username.trim(), password.trim(), hospitalId.trim()
     );
     return loginUser;
   }
@@ -65,7 +66,11 @@ export class LoginComponent implements OnInit {
       let loginUser = this.createUser();
       this.authService.loginAdmin(loginUser)
       .subscribe(
-        (res : any) => { this.afterSuccessfulLogin(
+        (res : any) => { 
+          this.authService.addUser('admin');
+          let token = res.accessToken;
+          this.authService.addToken(token);
+          this.afterSuccessfulLogin(
                           loginUser.role, 
                           loginUser.hospitalId,
                           loginUser.username )},
@@ -91,7 +96,11 @@ export class LoginComponent implements OnInit {
       let loginUser = this.createUser();
       this.authService.loginDoctor(loginUser)
       .subscribe(
-        (res : any) => { this.afterSuccessfulLogin(
+        (res : any) => { 
+          this.authService.addUser('doctor');
+          let token = res.accessToken;
+          this.authService.addToken(token);
+          this.afterSuccessfulLogin(
                           loginUser.role, 
                           loginUser.hospitalId,
                           loginUser.username )},
@@ -119,10 +128,14 @@ export class LoginComponent implements OnInit {
       this.authService.loginPatient(loginUser)
       .subscribe(
         (res : any) => {  
-                          this.afterSuccessfulLogin(
-                          loginUser.role, 
-                          loginUser.hospitalId,
-                          loginUser.username )},
+          this.authService.addUser('patient');
+          let token = res.accessToken;
+          this.authService.addToken(token);
+          this.afterSuccessfulLogin(
+          loginUser.role, 
+          loginUser.hospitalId,
+          loginUser.username )
+        },
         (err) => {
           if(err.status === 401){
             this.errorMsg = "Invalid Patient Credentials";

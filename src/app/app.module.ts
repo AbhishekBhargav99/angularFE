@@ -44,6 +44,7 @@ import { ViewrecordsComponent } from './patient-component/viewrecords/viewrecord
 import { AddmedicalrecordComponent } from './doctor-component/addmedicalrecord/addmedicalrecord.component';
 import { RecorddetailsComponent } from './patient-component/recorddetails/recorddetails.component';
 import { ViewrecordspermissionedComponent } from './doctor-component/viewrecordspermissioned/viewrecordspermissioned.component';
+import { AddmedrecComponent } from './doctor-component/addmedrec/addmedrec.component';
 
 
 
@@ -67,6 +68,7 @@ import { ViewrecordspermissionedComponent } from './doctor-component/viewrecords
     AddmedicalrecordComponent,
     RecorddetailsComponent,
     ViewrecordspermissionedComponent,
+    AddmedrecComponent,
     
   ],
   imports: [

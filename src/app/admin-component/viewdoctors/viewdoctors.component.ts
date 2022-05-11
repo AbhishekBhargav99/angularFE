@@ -7,6 +7,7 @@ import { DoctorRecordsView } from '../utils/doctor-records-view';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-viewdoctors',
@@ -27,7 +28,8 @@ export class ViewdoctorsComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private route: ActivatedRoute, 
-    private adminService: AdminService) { 
+    private adminService: AdminService,
+    private authservice: AuthService) { 
     this.adminId = "";
     this.hospitalId = "";
   }
@@ -53,7 +55,9 @@ export class ViewdoctorsComponent implements OnInit {
         this.dataSource.sort = this.sort;
       },
       (error) => {
-        console.log("error", error);
+        if(error.status === 400){
+          this.authservice.logOut();
+        }
       }
     )
   }

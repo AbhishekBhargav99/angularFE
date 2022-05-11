@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AuthService } from '../shared/auth.service';
 import { PatientService } from './patient.service';
 import { ViewpatientdetailsComponent } from './viewpatientdetails/viewpatientdetails.component';
 
@@ -17,7 +18,8 @@ export class PatientComponentComponent implements OnInit {
 
   constructor( private route: ActivatedRoute, 
     private patientService: PatientService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog, 
+    private authservice: AuthService) {
     this.patientId = "";
     this.hospitalId = "";
     this.patientInfo = "";
@@ -46,11 +48,18 @@ export class PatientComponentComponent implements OnInit {
       (res : any) => { 
         this.patientInfo = res; 
         this.patientService.permissionedArray = this.patientInfo.permissionGranted;
-        // this.openDialog(this.patientInfo);
       },
-      (err : any) => {console.log("Error : ", err) }
+      (err : any) => {console.log("Error : ", err) 
+        if(err.status === 400){
+          this.authservice.logOut();
+        }
+      }
     )
     
+  }
+
+  removeUser(){
+    this.authservice.removeUser();
   }
 
 

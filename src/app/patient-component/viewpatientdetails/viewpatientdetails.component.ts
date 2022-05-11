@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 // import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
 import { PatientService } from '../patient.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class ViewpatientdetailsComponent implements OnInit {
   constructor( private formBuilder : FormBuilder,
     private route: ActivatedRoute, 
     private patientService: PatientService,
+    private authservice: AuthService
     // @Inject(MAT_DIALOG_DATA) public patientData: any,
     // private dialogRef : MatDialogRef<ViewpatientdetailsComponent>
     ) { 
@@ -89,7 +91,11 @@ export class ViewpatientdetailsComponent implements OnInit {
         console.log(res);
         this.refresh();
       },
-      (err : any) => {console.log(err)}
+      (error : any) => {console.log(error)
+        if(error.status === 400){
+          this.authservice.logOut();
+        }
+      }
     )
     // console.log("patient Info : ", this.patientInfo);
   }

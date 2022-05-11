@@ -27,7 +27,7 @@
             <a class="nav-link " aria-current="page" [routerLink]="['viewRecords']"
             [routerLinkActive] = "['Active', 'activeClass']" [routerLinkActiveOptions]="{exact: true}" >View Records</a>
           </li>
-          <button mat-raised-button color="accent" type="button" [routerLink]="['']" >Log Out</button>
+          <button mat-raised-button color="accent" type="button" [routerLink]="['']" (click)="removeUser()" >Log Out</button>
         </ul>
        
       </div>

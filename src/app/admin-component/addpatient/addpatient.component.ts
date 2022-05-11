@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AdminService } from '../admin.service';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-addpatient',
@@ -27,7 +28,8 @@ export class AddpatientComponent  {
   constructor(private formBuilder : FormBuilder,
     private adminService : AdminService, 
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private authservice: AuthService) {
       
       this.newPatientForm = this.formBuilder.group({});
       this.bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -77,7 +79,8 @@ export class AddpatientComponent  {
       phoneNumber : this.newPatientForm.value.phoneNumber ,
       address : this.newPatientForm.value.address ,
       bloodGroup : this.newPatientForm.value.bloodGroup ,
-      age : this.getDate(),
+      age : this.newPatientForm.value.age.toDateString(),
+      gender: this.newPatientForm.value.gender,
       weight: this.newPatientForm.value.weight
 
     }
@@ -126,8 +129,10 @@ export class AddpatientComponent  {
             )
           }
         },
-        (err : any ) => {
-          console.log("Error : ", err);
+        (error : any ) => {
+          if(error.status === 400){
+            this.authservice.logOut();
+          }
         }
       )
   }

@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
 import { PatientService } from '../patient.service';
 import { RecorddetailsComponent } from '../recorddetails/recorddetails.component';
 
@@ -16,7 +17,7 @@ export class ViewrecordsComponent implements OnInit {
 
   patientId: string;
   hospitalId: string;
-  displayedColumns: string[] = ['sno', 'changedBy', 'timestamp' , 'reasonsForVisit', 'diagnosis', 'actions'];
+  displayedColumns: string[] = ['sno', 'changedBy', 'timestamp' , 'actions'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -25,6 +26,7 @@ export class ViewrecordsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, 
     private patientService: PatientService,
+    private authservice: AuthService,
     public dialog: MatDialog) {
       this.patientId = '';
       this.hospitalId = '';
@@ -54,7 +56,11 @@ export class ViewrecordsComponent implements OnInit {
         this.dataSource.sort = this.sort;
       
       },
-      (err: any) => {console.log(err)}
+      (err: any) => {console.log(err)
+        if(err.status === 400){
+          this.authservice.logOut();
+        }
+      }
     )
   }
 
@@ -63,7 +69,7 @@ export class ViewrecordsComponent implements OnInit {
       width: '40%',
       data: medRecord,
     })
-    console.log("medRecords : ", medRecord);
+    // console.log("medRecords : ", medRecord);
 
   }
 

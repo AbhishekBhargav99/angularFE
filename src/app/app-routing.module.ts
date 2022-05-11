@@ -6,6 +6,7 @@ import { AdminComponentComponent } from './admin-component/admin-component.compo
 import { ViewdoctorsComponent } from './admin-component/viewdoctors/viewdoctors.component';
 import { ViewpatientsComponent } from './admin-component/viewpatients/viewpatients.component';
 import { AddmedicalrecordComponent } from './doctor-component/addmedicalrecord/addmedicalrecord.component';
+import { AddmedrecComponent } from './doctor-component/addmedrec/addmedrec.component';
 import { DoctorComponentComponent } from './doctor-component/doctor-component.component';
 import { ViewpatientspermissionedComponent } from './doctor-component/viewpatientspermissioned/viewpatientspermissioned.component';
 import { ViewrecordspermissionedComponent } from './doctor-component/viewrecordspermissioned/viewrecordspermissioned.component';
@@ -14,6 +15,9 @@ import { PatientComponentComponent } from './patient-component/patient-component
 import { ViewalldoctorsComponent } from './patient-component/viewalldoctors/viewalldoctors.component';
 import { ViewpatientdetailsComponent } from './patient-component/viewpatientdetails/viewpatientdetails.component';
 import { ViewrecordsComponent } from './patient-component/viewrecords/viewrecords.component';
+import { AdminGuard } from './shared/admin.guard';
+import { DoctorGuard } from './shared/doctor.guard';
+import { PatientGuard } from './shared/patient.guard';
 import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
@@ -31,6 +35,7 @@ const routes: Routes = [
 
     path:'admin/:hospId/:adminId',
     component: AdminComponentComponent,
+    canActivate: [AdminGuard],
     children: [
       {
         path: '',
@@ -53,6 +58,7 @@ const routes: Routes = [
   },{
     path: 'patient/:hospId/:patientId',
     component: PatientComponentComponent,
+    canActivate: [PatientGuard],
     children:[
       {
         path: '',
@@ -73,6 +79,7 @@ const routes: Routes = [
   }, {
     path : 'doctor/:hospId/:doctorId',
     component: DoctorComponentComponent,
+    canActivate: [DoctorGuard],
     children:[
       {
         path: '',
@@ -87,6 +94,9 @@ const routes: Routes = [
       }, {
         path: 'viewRecords/:patientId',
         component: ViewrecordspermissionedComponent
+      }, {
+        path: 'addRec/:patientId',
+        component: AddmedrecComponent
       }
     ]
   }

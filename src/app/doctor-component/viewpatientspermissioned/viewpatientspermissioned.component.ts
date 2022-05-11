@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/shared/auth.service';
 import { DoctorService } from '../doctor.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class ViewpatientspermissionedComponent implements OnInit {
   doctorId: string;
   hospitalId: string;
   private sub ?: Subscription;
-  displayedColumns: string[] = ['patientId', 'firstName', 'lastName', 'age', 'bloodGroup', 'gender', 'weight', 'actions'];
+  displayedColumns: string[] = ['patientId', 'firstName', 'lastName', 'age', 'bloodGroup', 'gender', 'actions'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -24,7 +25,8 @@ export class ViewpatientspermissionedComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, 
     private doctorService: DoctorService,
-    private router: Router){
+    private router: Router,
+    private authservice: AuthService){
       
       this.doctorId = "";
       this.hospitalId = "";
@@ -51,7 +53,9 @@ export class ViewpatientspermissionedComponent implements OnInit {
       this.dataSource.sort = this.sort;
     },
     error => {
-      console.log("error : ",error);
+      if(error.status === 400){
+        this.authservice.logOut();
+      }
     })
   }
 
@@ -66,7 +70,7 @@ export class ViewpatientspermissionedComponent implements OnInit {
 
   addRecord(patientId : string){
     // console.log("Patient Id : ", patientId);
-    this.router.navigate(['..', 'addRecord', patientId], {relativeTo: this.route});
+    this.router.navigate(['..', 'addRec', patientId], {relativeTo: this.route});
   }
 
   viewPermissionedRecords(patientId: string){

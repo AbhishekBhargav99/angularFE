@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/admin-component/admin.service';
 import { DoctorService } from '../doctor.service';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-addmedicalrecord',
@@ -23,7 +24,8 @@ export class AddmedicalrecordComponent implements OnInit {
   constructor(private formBuilder : FormBuilder, 
     private route: ActivatedRoute,
     private doctorService : DoctorService,
-    private router : Router) 
+    private router : Router,
+    private authservice: AuthService) 
     { 
     this.patientId = "";
     this.doctorId = "";
@@ -106,6 +108,9 @@ export class AddmedicalrecordComponent implements OnInit {
             }  
         },
          (err: any) => { console.log(err);
+          if(err.status === 400){
+            this.authservice.logOut();
+          }
           Swal.fire({
             title: "Could Not Add Patient Records",
             icon: 'error'

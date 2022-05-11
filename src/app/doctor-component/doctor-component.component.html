@@ -19,12 +19,12 @@
           [routerLinkActive] = "['Active', 'activeClass']" [routerLinkActiveOptions]="{exact: true}" >View Patients</a>
         </li>
         
-        <button mat-raised-button color="accent" type="button" [routerLink]="['']" >Log Out</button>
+        <button mat-raised-button color="accent" type="button" [routerLink]="['']" (click)="removeUser()" >Log Out</button>
       </ul>
     </div>
   </div>
 </nav>
 
-<div style="margin-top:100px ;">
+<div style="padding-top:100px ;">
   <router-outlet></router-outlet>
 </div>

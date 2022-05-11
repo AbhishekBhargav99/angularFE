@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AdminService } from '../admin.service';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-adddoctor',
@@ -22,7 +23,8 @@ export class AdddoctorComponent implements OnInit {
   constructor(private formBuilder : FormBuilder,
     private adminService : AdminService, 
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router, 
+    private authservice: AuthService) {
       this.adminId ="";
       this.hospitalId = "";
       this.newDoctorForm = this.formBuilder.group({});
@@ -91,6 +93,9 @@ export class AdddoctorComponent implements OnInit {
             title: "User Id already Present",
             icon: 'error',
           })
+        }
+        if(err.status === 400){
+          this.authservice.logOut();
         }
       }
     )

@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { RecorddetailsComponent } from 'src/app/patient-component/recorddetails/recorddetails.component';
+import { AuthService } from 'src/app/shared/auth.service';
 import { DoctorService } from '../doctor.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class ViewrecordspermissionedComponent implements OnInit {
   patientId: string;
   doctorId: string;
   hospitalId: string;
-  displayedColumns: string[] = ['sno', 'changedBy', 'timestamp' , 'reasonsForVisit', 'diagnosis', 'actions'];
+  displayedColumns: string[] = ['sno', 'changedBy', 'timestamp' , 'actions'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -27,7 +28,8 @@ export class ViewrecordspermissionedComponent implements OnInit {
   constructor(private formBuilder : FormBuilder, 
     private route: ActivatedRoute,
     private doctorService : DoctorService,
-    public dialog: MatDialog) { 
+    public dialog: MatDialog,
+    private authservice: AuthService) { 
 
       this.patientId = "";
       this.doctorId = "";
@@ -62,7 +64,11 @@ export class ViewrecordspermissionedComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      (err : any) => { console.log(err) }
+      (error : any) => {
+        if(error.status === 400){
+          this.authservice.logOut();
+        }
+      }
     )
   }
 
@@ -71,7 +77,7 @@ export class ViewrecordspermissionedComponent implements OnInit {
       width: '40%',
       data: medRecord,
     })
-    console.log("medRecords : ", medRecord);
+    // console.log("medRecords : ", medRecord);
 
   }
 

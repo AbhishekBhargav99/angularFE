@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AdminService } from '../admin-component/admin.service';
 import { LoaderService } from '../loader/loader.service';
+import { AuthService } from '../shared/auth.service';
 
 
 
@@ -22,6 +23,7 @@ export class AdminComponentComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, 
     private adminService: AdminService,
+    private authservice: AuthService
     ){
 
       this.adminId = "";
@@ -35,6 +37,10 @@ export class AdminComponentComponent implements OnInit {
           this.adminId = params['adminId'];
           this.hospitalId = params["hospId"]
         });
+  }
+
+  removeUser(){
+    this.authservice.removeUser();
   }
  
 }

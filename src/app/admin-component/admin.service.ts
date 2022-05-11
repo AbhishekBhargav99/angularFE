@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, Observable } from 'rxjs';
 import { PatientRecordsView } from './utils/patient-records-view';
 import { DoctorRecordsView } from './utils/doctor-records-view';
+import { AuthService } from '../shared/auth.service';
 
 
 @Injectable({
@@ -11,49 +12,58 @@ import { DoctorRecordsView } from './utils/doctor-records-view';
 export class AdminService {
 
   private Url = 'http://localhost:3000/adminApi'
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private authservice: AuthService
+    ) { }
 
   public getAllPatients(adminId: string, hospId: string) : Observable<any> {
+
+    let token = this.authservice.getToken();
+    if(!token){
+      this.authservice.logOut();
+      token = '123';
+    }
     return this.http.get<PatientRecordsView>(
       (this.Url+ '/allPatients'),
       {
         headers: new HttpHeaders({
           'hospitalid' : hospId,
-          'adminid': adminId
+          'adminid': adminId,
+          'accessToken' : token,
         })
       }
     ).pipe(
       map(
         reponseData => {
-          // let responseArray : PatientRecordsView[] = [];
-          // for(let response of responseArray){
-          //   responseArray.push(response);
-          // }
           return reponseData; 
         }),
         catchError(errorRes => {
-          throw(errorRes);
+            throw(errorRes);
+        
         })
 
     )
   }
 
   public getAllDoctors(adminId: string, hospId: string) : Observable<any> {
+    
+    let token = this.authservice.getToken();
+    if(!token){
+      this.authservice.logOut();
+      token = '123';
+    }
     return this.http.get<DoctorRecordsView>(
       (this.Url+ '/allDoctors'),
       {
         headers: new HttpHeaders({
           'hospitalid' : hospId,
-          'adminid': adminId
+          'adminid': adminId,
+          'accessToken': token
         })
       }
     ) .pipe(
       map( responseArray => {
-        // console.log(res);
-        // let responseArray : DoctorRecordsView[] = []
-        // for(let response of responseArray){
-        //   responseArray.push(response);
-        // }
+        
         return responseArray;
         // return reponseData;
       }),
@@ -67,13 +77,19 @@ export class AdminService {
   public registerPatient(adminId: string, hospId: string, patientData: Object){
     // console.log(adminId, hospId);
     // console.log(patientData);
+    let token = this.authservice.getToken();
+    if(!token){
+      this.authservice.logOut();
+      token = '123';
+    }
     return this.http.post(
       (this.Url + '/newPatient'),
       patientData,
       {
         headers: new HttpHeaders({
           'hospitalid' : hospId,
-          'adminid': adminId
+          'adminid': adminId,
+          'accessToken': token
         })
       }
     )
@@ -92,13 +108,20 @@ export class AdminService {
   }
 
   public registerDoctor(adminId: string, hospId: string, doctorData: Object){
+    
+    let token = this.authservice.getToken();
+    if(!token){
+      this.authservice.logOut();
+      token = '123';
+    }
     return this.http.post(
       (this.Url + '/newDoctor'),
       doctorData,
       {
         headers: new HttpHeaders({
           'hospitalid' : hospId,
-          'adminid': adminId
+          'adminid': adminId,
+          'accessToken': token
         })
       }
     ) .pipe(

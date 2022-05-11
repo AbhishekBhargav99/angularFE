@@ -9,7 +9,6 @@
   .activeClass{
     background-color: rgb(245, 153, 153);
     opacity: .8;
-    /* color: black; */
     z-index: -1;
     border-radius: 5px;
   }

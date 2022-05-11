@@ -7,6 +7,7 @@ import { PatientRecordsView } from '../utils/patient-records-view';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-viewpatients',
@@ -27,7 +28,8 @@ export class ViewpatientsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private route: ActivatedRoute, 
-    private adminService: AdminService){
+    private adminService: AdminService,
+    private authservice: AuthService){
       
       this.adminId = "";
       this.hospitalId = "";
@@ -36,15 +38,7 @@ export class ViewpatientsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // console.log("In ngonitn")
-      // Cannot directly access params in child routes
-        // this.sub = this.route.params
-        // .subscribe((params: Params) => {
-        //   this.adminId = params['adminId'];
-        //   this.hospitalId = params["hospId"]
-        //   console.log("cred : ", this.adminId, this.hospitalId);
-        //   this.refresh();
-        // });
+    
         this.sub = this.route.parent?.params
                     .subscribe(
                       params => {
@@ -65,6 +59,9 @@ export class ViewpatientsComponent implements OnInit, OnDestroy {
     },
     error => {
       console.log("error : ",error);
+      if(error.status === 400){
+        this.authservice.logOut();
+      }
     })
   }
 

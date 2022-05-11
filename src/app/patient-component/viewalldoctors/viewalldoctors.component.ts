@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { DoctorRecordsView } from 'src/app/admin-component/utils/doctor-records-view';
 import { PatientService } from '../patient.service';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-viewalldoctors',
@@ -30,7 +31,8 @@ export class ViewalldoctorsComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private route: ActivatedRoute, 
-    private patientService: PatientService) { 
+    private patientService: PatientService,
+    private authservice: AuthService) { 
     this.patientId =""
     this.hospitalId = "";
     this.permissionedDocs= [];
@@ -59,7 +61,9 @@ export class ViewalldoctorsComponent implements OnInit {
         this.dataSource.sort = this.sort;
       },
       (error) => {
-        console.log("error", error);
+        if(error.status === 400){
+          this.authservice.logOut();
+        }
       }
     )
   }
