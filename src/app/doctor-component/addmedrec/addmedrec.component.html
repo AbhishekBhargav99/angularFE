@@ -68,8 +68,24 @@
     </div>
 </div>
 
-
-<!-- -------------------------------------------- -->
+<!-- ------------------------------------------------------------------------- -->
+<div class="container my-5" *ngIf="uploadedImageCount < 3">
+  <div class="row">
+      <div class="col-md-12 ">
+          <mat-card >
+            <div>
+              <label for="">Choose File to Upload :: </label>
+              <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+              <input hidden (change)="chooseImage($event)" #fileInput type="file">
+              <span class="file-name">{{selectedFile?.name}}</span>
+              <button type="button" *ngIf="isValidFileType && selectedFile != ''" class="btn btn-danger" (click)="uploadImage()">Upload</button>
+            </div>
+          </mat-card>
+      </div>
+    </div>
+</div>
+   
+<!-- --------------------------------------------------------------- -->
 
 <div class="container">
     <div style="margin-top: 10px;">

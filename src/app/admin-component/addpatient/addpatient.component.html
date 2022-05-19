@@ -28,7 +28,7 @@
         <mat-form-field class="full-width my-2" appearance="outline">
           <mat-label  class="formLabel">Email</mat-label>
           <input class="formInput" matInput placeholder="Your Email Address" formControlName="email">
-          <mat-hint class="formHint" *ngIf="!this.newPatientForm.get('email')?.valid && this.newPatientForm.get('email')?.touched">Entaer a Valid Email less than 25 characters long</mat-hint>
+          <mat-hint class="formHint" *ngIf="!this.newPatientForm.get('email')?.valid && this.newPatientForm.get('email')?.touched">Entaer a Valid Email less than 30 characters long</mat-hint>
         </mat-form-field>
 
         <mat-form-field class="full-width my-2" appearance="outline">
@@ -40,7 +40,7 @@
         <mat-form-field class="full-width my-2" appearance="outline">
           <mat-label class="formLabel" >Address</mat-label>
           <textarea class="formInput" matInput placeholder="Address" formControlName="address"></textarea>
-          <mat-hint class="formHint" *ngIf="!this.newPatientForm.get('address')?.valid && this.newPatientForm.get('address')?.touched">Address should be max 80 characters</mat-hint>
+          <mat-hint class="formHint" *ngIf="!this.newPatientForm.get('address')?.valid && this.newPatientForm.get('address')?.touched">Address should be max 100 characters</mat-hint>
         </mat-form-field>
 
         <mat-form-field  class="full-width my-2" appearance="outline">

@@ -35,6 +35,10 @@
              <button class="mat-icon-button" (click)="showRecordsDetails(row)">
                <mat-icon>visibility</mat-icon>
              </button>
+
+              <button *ngIf="row.imageUrls && row.imageUrls.length != ''" type="button" class="mat-icon-button"
+                  (click)="showImage(row.imageUrls)">
+              <mat-icon>image</mat-icon></button>
             </td>
           </ng-container>
          

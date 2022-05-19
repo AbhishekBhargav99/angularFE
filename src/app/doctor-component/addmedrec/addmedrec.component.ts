@@ -7,6 +7,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../doctor.service';
+// import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage'
+import { StorageModule } from '@angular/fire/storage';
+import { Storage } from '@angular/fire/storage';
+import {AngularFireStorage} from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+// import { FirebaseStorage } from 'firebase/storage';
 
 @Component({
   selector: 'app-addmedrec',
@@ -21,6 +28,12 @@ export class AddmedrecComponent implements OnInit {
   patientId: string;
   doctorId: string;
   hospitalId: string;
+  selectedFile : any;
+  imgSrc: string;
+  uploaded: Boolean;
+  isValidFileType: Boolean;
+  uploadedImageCount: number;
+  imageUrls : Array<any>;
 
   displayedColumns: string[] = ['sNo', 'key', 'value' , 'action' ];
   allRecords : Array<Object>;
@@ -34,7 +47,10 @@ export class AddmedrecComponent implements OnInit {
     private route: ActivatedRoute,
     private doctorService : DoctorService,
     private router : Router,
-    private authservice: AuthService) {
+    private authservice: AuthService,
+    private storage: Storage,
+    private af: AngularFireStorage,
+    private ngxService: NgxUiLoaderService) {
 
     this.patientId = "";
     this.doctorId = "";
@@ -42,10 +58,16 @@ export class AddmedrecComponent implements OnInit {
     this.inputType = 'Text';
     this.medRecItem = this.formBuilder.group({});
     this.allRecords = [];
+    this.selectedFile = "";
+    this.imgSrc = "";
+    this.uploaded = false;
+    this.isValidFileType = false;
+    this.uploadedImageCount = 0;
+    this.imageUrls = [];
    }
 
   ngOnInit(): void {
-
+    this.uploadedImageCount = 0;
     this.route.parent?.params
     .subscribe(
       params => {
@@ -64,6 +86,7 @@ export class AddmedrecComponent implements OnInit {
         key: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
         value: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(250)])
     })
+    this.uploaded = false;
   }
 
   myFilter(){
@@ -91,8 +114,6 @@ export class AddmedrecComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.allRecords);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
-
   }
 
   submitForm(){
@@ -105,7 +126,7 @@ export class AddmedrecComponent implements OnInit {
       
       if (result.isConfirmed) {
         this.doctorService.addMedicalRecs(this.patientId, this.doctorId,
-          this.hospitalId, this.allRecords)
+          this.hospitalId, this.allRecords, this.imageUrls)
           .subscribe(
             (res : any) => {
               console.log(res);
@@ -166,4 +187,79 @@ export class AddmedrecComponent implements OnInit {
     this.inputType = 'Text';
   }
 
+  chooseImage(event : any){
+    if(event.target.files && event.target.files[0]){
+      const reader = new FileReader();
+      reader.onload = (e : any) => this.imgSrc = e.target.result;
+      reader.readAsDataURL(event.target.files[0]);
+      this.selectedFile = event.target.files[0];
+    }
+    else{
+      this.imgSrc = "";
+      this.selectedFile = null;
+    }
+    console.log('Selected File :', this.selectedFile);
+    console.log('Selected File Type :', this.selectedFile.type);
+    console.log('File Size mb : ', (this.selectedFile.size)/(1024 * 1024) )
+    if(this.selectedFile.type != "image/png" && this.selectedFile.type != 'image/jpg' && this.selectedFile.type != 'image/jpeg' && this.selectedFile.type != 'application/pdf'){
+      this.isValidFileType = false;
+      this.selectedFile = "";
+      Swal.fire({
+        title: "Select JPG, PNG, JPEG and PDF only",
+        icon:"error"
+      })
+      return;
+    }
+    if((this.selectedFile.size)/(1024 * 1024) > 4){
+      this.isValidFileType = false;
+      this.selectedFile = "";
+      Swal.fire({
+        title: "File size should be less than 4mb",
+        icon:"error"
+      })
+      return;
+    }
+    this.isValidFileType = true;
+  }
+
+  uploadImage(){
+
+    if(!this.selectedFile)
+      return;
+    console.log('Upload');
+    var filePath = `ehrFiles/${this.selectedFile.name}_${new Date().getTime()}`;
+    const fileRef = this.af.ref(filePath);
+    this.ngxService.start()
+    this.af.upload(filePath, this.selectedFile).snapshotChanges().pipe(
+      finalize(() => {
+        
+        fileRef.getDownloadURL().subscribe((url: any) => {
+          // this.imgSrc = url;
+          this.imageUrls.push(url);
+          console.log('URL : ', url);
+          console.log(this.imageUrls);
+          this.uploadedImageCount += 1;
+          this.selectedFile= "";
+          this.ngxService.stop()
+          Swal.fire({
+            title: "Successfully Uploaded Image",
+            text: `Total Uploaded Images : ${this.uploadedImageCount}`,
+            icon:'success',
+            confirmButtonText: 'Ok',
+          })
+          this.uploaded = true;
+          
+        })
+      })
+    )
+    .subscribe()
+    // this.ngxService.stop()
+  }
+
+  deleteImage(){
+    for(let url in this.imageUrls){
+      this.af.refFromURL(url).delete();
+    }
+  }
 }
+

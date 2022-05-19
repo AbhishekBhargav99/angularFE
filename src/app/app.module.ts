@@ -23,10 +23,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { AdminComponentComponent } from './admin-component/admin-component.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../environments/environment';
+import { FirestoreModule, provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { DatabaseModule, provideDatabase,getDatabase  } from '@angular/fire/database';
+import { StorageModule, provideStorage,getStorage } from '@angular/fire/storage'; 
 
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
@@ -45,6 +51,9 @@ import { AddmedicalrecordComponent } from './doctor-component/addmedicalrecord/a
 import { RecorddetailsComponent } from './patient-component/recorddetails/recorddetails.component';
 import { ViewrecordspermissionedComponent } from './doctor-component/viewrecordspermissioned/viewrecordspermissioned.component';
 import { AddmedrecComponent } from './doctor-component/addmedrec/addmedrec.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { ShowImageComponent } from './show-image/show-image.component';
+import { NgxUiLoaderModule } from "ngx-ui-loader";
 
 
 
@@ -69,6 +78,7 @@ import { AddmedrecComponent } from './doctor-component/addmedrec/addmedrec.compo
     RecorddetailsComponent,
     ViewrecordspermissionedComponent,
     AddmedrecComponent,
+    ShowImageComponent,
     
   ],
   imports: [
@@ -96,7 +106,18 @@ import { AddmedrecComponent } from './doctor-component/addmedrec/addmedrec.compo
     MatToolbarModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    FirestoreModule,
+    DatabaseModule,
+    StorageModule,
+    PdfViewerModule,
+    NgxUiLoaderModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
+    // provideStorage(() => getStorage())
   ],
   providers: [
     { 

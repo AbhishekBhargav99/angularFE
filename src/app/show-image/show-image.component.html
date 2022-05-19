@@ -1,0 +1,18 @@
+<h2 mat-dialog-title class="formHeading my-2"> Patient's Medical Record Details</h2>
+
+<!-- <div style="height: 700px">
+    <img src="{{imageUrl}}" alt=" " style="width: 100%;max-height: 100%" />
+</div> -->
+<!-- <pdf-viewer src="{{imageUrl}}"></pdf-viewer> -->
+
+<a *ngIf="isPdf(imageUrl)" href="{{imageUrl}}" target="_blank"> View PDF</a>
+
+<div *ngIf="!isPdf(imageUrl)" style="height: 700px">
+    <img src="{{imageUrl}}" alt=" " style="width: 100%;max-height: 100%" />
+</div>
+<mat-dialog-actions align="left">
+    <button mat-raised-button color="primary" (click)="onChangeImage()">Next</button>
+</mat-dialog-actions>
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+</mat-dialog-actions>

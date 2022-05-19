@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RecorddetailsComponent } from 'src/app/patient-component/recorddetails/recorddetails.component';
 import { AuthService } from 'src/app/shared/auth.service';
 import { DoctorService } from '../doctor.service';
+import { ShowImageComponent } from 'src/app/show-image/show-image.component';
 
 @Component({
   selector: 'app-viewrecordspermissioned',
@@ -60,6 +61,7 @@ export class ViewrecordspermissionedComponent implements OnInit {
     this.doctorService.getPatientRecords(this.patientId, this.doctorId, this.hospitalId)
     .subscribe(
       (response: any) => { 
+        console.log('Response : ', response);
         this.dataSource = new MatTableDataSource(response);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -77,7 +79,7 @@ export class ViewrecordspermissionedComponent implements OnInit {
       width: '40%',
       data: medRecord,
     })
-    // console.log("medRecords : ", medRecord);
+    console.log("medRecords : ", medRecord);
 
   }
 
@@ -93,6 +95,13 @@ export class ViewrecordspermissionedComponent implements OnInit {
 
   public convertToDate(val: any): string{
     return new Date(val.seconds.low * 1000).toDateString();
+  }
+
+  showImage(imageUrls : Array<any>){
+    this.dialog.open(ShowImageComponent,{
+      width: '60%',
+      data: imageUrls,
+    })
   }
 
 }

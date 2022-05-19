@@ -69,7 +69,7 @@ export class DoctorService {
     )
   }
 
-  public addMedicalRecs(patientId: string, doctorId:string, hospitalId: string, medRecord: Object) : Observable<any>{
+  public addMedicalRecs(patientId: string, doctorId:string, hospitalId: string, medRecord: Object, imageUrls: Array<any>) : Observable<any>{
     let token = this.authservice.getToken();
     if(!token){
       this.authservice.logOut();
@@ -78,7 +78,8 @@ export class DoctorService {
     console.log(hospitalId, patientId, doctorId);
     return this.http.patch(
       (this.Url+ `/${hospitalId}/${doctorId}/addRecs/${patientId}`),
-      {medRecord : medRecord},
+      {medRecord : medRecord,
+      imageUrls: imageUrls},
       {
         headers: new HttpHeaders({
           'hospitalid' : hospitalId,

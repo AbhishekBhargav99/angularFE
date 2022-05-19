@@ -70,6 +70,7 @@ export class ViewpatientspermissionedComponent implements OnInit {
 
   addRecord(patientId : string){
     // console.log("Patient Id : ", patientId);
+    console.log('Add Record');
     this.router.navigate(['..', 'addRec', patientId], {relativeTo: this.route});
   }
 

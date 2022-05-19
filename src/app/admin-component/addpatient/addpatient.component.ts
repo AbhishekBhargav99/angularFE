@@ -46,9 +46,9 @@ export class AddpatientComponent  {
     this.newPatientForm = this.formBuilder.group({
       firstName : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
       lastName : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
-      email : new FormControl('', [Validators.required, Validators.email, Validators.maxLength(25)]),
+      email : new FormControl('', [Validators.required, Validators.email, Validators.maxLength(35)]),
       phoneNumber: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$"), Validators.maxLength(10) ]),
-      address: new FormControl('', [Validators.required, Validators.minLength(3) , Validators.maxLength(80)]),
+      address: new FormControl('', [Validators.required, Validators.minLength(3) , Validators.maxLength(100)]),
       bloodGroup: new FormControl('', Validators.required),
       age : new FormControl(new Date(), [ Validators.required]),
       weight: new FormControl('', [Validators.required]),
@@ -88,18 +88,24 @@ export class AddpatientComponent  {
   }
 
   myFilter = (d: Date | null): boolean => {
+
+    if(d){
+      return d <= new Date();
+    }
+    return true;
+    
     
   
-    const day = (d || new Date()).getDay();
-    const month = (d || new Date()).getMonth();
-    const year = (d || new Date()).getFullYear();
+    // const day = (d || new Date()).getDay();
+    // const month = (d || new Date()).getMonth();
+    // const year = (d || new Date()).getFullYear();
     // months start from 0 to 11
     // Prevent Saturday and Sunday from being selected.
-    if(year == 2022){
-      if(month <= 1) return true;
-      else return false;
-    }
-    return year <= 2021
+    // if(year == 2022){
+    //   if(month <= 1) return true;
+    //   else return false;
+    // }
+    // return year <= 2021
   };
 
 

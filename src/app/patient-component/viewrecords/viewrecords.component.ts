@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
+import { ShowImageComponent } from 'src/app/show-image/show-image.component';
 import { PatientService } from '../patient.service';
 import { RecorddetailsComponent } from '../recorddetails/recorddetails.component';
 
@@ -85,6 +86,13 @@ export class ViewrecordsComponent implements OnInit {
 
   public convertToDate(val: any): string{
     return new Date(val.seconds.low * 1000).toDateString();
+  }
+
+  showImage(imageUrls : Array<any>){
+    this.dialog.open(ShowImageComponent,{
+      width: '60%',
+      data: imageUrls,
+    })
   }
 
 }
