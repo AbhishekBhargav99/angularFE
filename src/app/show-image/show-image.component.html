@@ -7,8 +7,11 @@
 
 <a *ngIf="isPdf(imageUrl)" href="{{imageUrl}}" target="_blank"> View PDF</a>
 
-<div *ngIf="!isPdf(imageUrl)" style="height: 700px">
-    <img src="{{imageUrl}}" alt=" " style="width: 100%;max-height: 100%" />
+
+<div *ngIf="!isPdf(imageUrl)" style="height: 700px; text-align: center;">
+    <a href="{{imageUrl}}" target="_blank">
+        <img src="{{imageUrl}}" alt=" " style="max-height: 100%" />
+    </a>
 </div>
 <mat-dialog-actions align="left">
     <button mat-raised-button color="primary" (click)="onChangeImage()">Next</button>
